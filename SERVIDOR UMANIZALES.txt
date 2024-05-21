@@ -1,0 +1,23 @@
+ Adjunto, envío las credenciales e información del servidor y la máquina virtual necesarias para facilitar el acceso a través de SSH. Este acceso es fundamental para llevar a cabo la creación de usuarios en el sistema operativo, conforme a los requerimientos discutidos durante nuestra reunión previa.
+
+Por favor, utiliza las siguientes credenciales para iniciar sesión en el servidor y la máquina virtual:
+
+Servidor:
+
+Dirección IP interna umanizales: [192.168.1.11]
+
+Dirección IP publica: [190.121.154.40]
+
+Nombre de usuario: [server_acardona]
+
+Contraseña: [server_acardona_2024]
+
+
+Una vez que haya accedido correctamente, procederá con la creación de los usuarios en el sistema operativo, conforme a los requisitos discutidos y acordados en nuestra reunión previa.
+Quedo a su disposición para cualquier pregunta o aclaración adicional.
+
+ 
+
+Gracias por la atención prestada
+
+Feliz dia

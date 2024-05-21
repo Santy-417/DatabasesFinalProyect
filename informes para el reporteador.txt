@@ -1,0 +1,134 @@
+Reporte de Reservas Actuales: Generar un informe que liste todas las reservas activas con los siguientes campos: ReservaID, ClienteID, VueloID, FechaReserva, Estado, Clase, Precio y Asiento.
+
+SELECT 
+    r.ReservaID, r.ClienteID, r.VueloID, r.FechaReserva, r.Estado, b.Clase, b.Precio, b.Asiento
+FROM 
+    Reservas r
+JOIN 
+    Boletos b ON r.ReservaID = b.ReservaID
+WHERE 
+    r.Estado = 'confirmada';
+
+
+Reporte de Clientes Frecuentes: Generar un reporte que identifique a los clientes que han realizado más de cinco reservas en los últimos doce meses, incluyendo ClienteID, Nombre, Apellido, Email y el Número de Reservas."
+
+SELECT 
+    c.ClienteID, c.Nombre, c.Apellido, c.Email, COUNT(r.ReservaID) AS NumeroReservas
+FROM 
+    Clientes c
+JOIN 
+    Reservas r ON c.ClienteID = r.ClienteID
+WHERE 
+    r.Creado_en >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+GROUP BY 
+    c.ClienteID, c.Nombre, c.Apellido, c.Email
+HAVING 
+    COUNT(r.ReservaID) > 5;
+
+
+Reporte de Vuelos por Aeronave: Generar un informe que detalle los vuelos asociados a una aeronave específica, con AeronaveID, VueloID, NúmeroVuelo, Aerolínea, FechaHoraSalida, FechaHoraLlegada, Origen y Destino
+
+SELECT 
+    a.AeronaveID, v.VueloID, v.NumeroVuelo, v.Aerolinea, v.FechaHoraSalida, v.FechaHoraLlegada, v.Origen, v.Destino
+FROM 
+    Vuelos v
+JOIN 
+    Aeronaves a ON v.AeronaveID = a.AeronaveID;
+
+
+Reporte de Boletos Vendidos: Generar un resumen de la cantidad de boletos vendidos por vuelo, aeronave y destino, con los campos VueloID, AeronaveID, Clase, Cantidad Vendida y Ingreso Total.
+
+SELECT 
+    v.VueloID, v.AeronaveID, b.Clase, COUNT(b.BoletoID) AS CantidadVendida, SUM(b.Precio) AS IngresoTotal
+FROM 
+    Boletos b
+JOIN 
+    Reservas r ON b.ReservaID = r.ReservaID
+JOIN 
+    Vuelos v ON r.VueloID = v.VueloID
+GROUP BY 
+    v.VueloID, v.AeronaveID, b.Clase;
+
+
+Reporte de Reservas por Estado: Preparar un informe que agrupe las reservas por su estado (confirmada, cancelada, etc.) mostrando Estado, Cantidad de Reservas y Ingreso Total.
+
+SELECT 
+    r.Estado, COUNT(r.ReservaID) AS CantidadReservas, SUM(b.Precio) AS IngresoTotal
+FROM 
+    Reservas r
+JOIN 
+    Boletos b ON r.ReservaID = b.ReservaID
+GROUP BY 
+    r.Estado;
+
+
+Reporte de Ingresos por Clase de Boleto: Generar un reporte que clasifique los boletos vendidos por clase (económica, ejecutiva, etc.) y calcule el Ingreso Total por clase.
+
+SELECT 
+    b.Clase, SUM(b.Precio) AS IngresoTotal
+FROM 
+    Boletos b
+GROUP BY 
+    b.Clase;
+
+
+Reporte de Vuelos más Demandados: Generar un informe que muestre los vuelos más demandados en función del Número de Reservas realizadas, incluyendo VueloID, NúmeroVuelo, Aerolínea, Origen, Destino y Número de Reservas.
+
+SELECT 
+    v.VueloID, v.NumeroVuelo, v.Aerolinea, v.Origen, v.Destino, COUNT(r.ReservaID) AS NumeroReservas
+FROM 
+    Vuelos v
+JOIN 
+    Reservas r ON v.VueloID = r.VueloID
+GROUP BY 
+    v.VueloID, v.NumeroVuelo, v.Aerolinea, v.Origen, v.Destino
+ORDER BY 
+    NumeroReservas DESC
+LIMIT 10;
+
+
+
+Reporte de Clientes sin Reservas Recientes: Identificar a los clientes que no han realizado ninguna reserva en los últimos seis meses, con los campos ClienteID, Nombre, Apellido y Última Reserva.
+
+SELECT 
+    c.ClienteID, c.Nombre, c.Apellido, MAX(r.Creado_en) AS UltimaReserva
+FROM 
+    Clientes c
+LEFT JOIN 
+    Reservas r ON c.ClienteID = r.ClienteID
+GROUP BY 
+    c.ClienteID, c.Nombre, c.Apellido
+HAVING 
+    MAX(r.Creado_en) IS NULL OR MAX(r.Creado_en) < DATE_SUB(CURDATE(), INTERVAL 6 MONTH);
+
+
+
+Reporte de Boletos No Asignados: Generar un informe que muestre boletos que no han sido asignados a un asiento específico.
+
+SELECT 
+    b.BoletoID, b.ReservaID, b.Clase, b.Precio, b.Asiento
+FROM 
+    Boletos b
+WHERE 
+    b.Asiento IS NULL OR b.Asiento = '';
+
+
+Reporte de Capacidad de Aeronaves: Generar un informe que muestre la capacidad de las aeronaves y cuántos vuelos han realizado en los últimos doce meses, con AeronaveID, Modelo, Capacidad, Número de Vuelos y Número de Pasajeros Transportados.
+
+SELECT 
+    a.AeronaveID, a.Modelo, a.Capacidad, COUNT(v.VueloID) AS NumeroVuelos, SUM(b.CantidadPasajeros) AS NumeroPasajerosTransportados
+FROM 
+    Aeronaves a
+JOIN 
+    Vuelos v ON a.AeronaveID = v.AeronaveID
+LEFT JOIN 
+    (SELECT 
+        r.VueloID, COUNT(b.BoletoID) AS CantidadPasajeros
+    FROM 
+        Reservas r
+    JOIN 
+        Boletos b ON r.ReservaID = b.ReservaID
+    GROUP BY 
+        r.VueloID) b ON v.VueloID = b.VueloID
+GROUP BY 
+    a.AeronaveID, a.Modelo, a.Capacidad;
