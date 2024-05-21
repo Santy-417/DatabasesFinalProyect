@@ -1,19 +1,21 @@
 <?php
 include('conexion_bd.php');
-//ESTA SENTENCIA ESTABLECE UNA CONEXIÓN CON LA BASE DE DATOS
 $conexion = conexion_bd();
 
-$id_personal = $_POST['id_update'];
-$nombre = $_POST['nombre'];
-$apellido = $_POST['apellido'];
-$puesto = $_POST['puesto'];
-$departamento = $_POST['departamento'];
-//ESTA INSTURCCION CONSTRUYE EL UPDATE PARA LA TABLA CLIENTES
-$sql = "UPDATE personal
-SET  nombre = '$nombre',  apellido = '$apellido',  puesto = '$puesto', departamento = '$departamento' 
-WHERE id_personal = '$id_personal'";
-//echo $sql;
-//EJECUTA EL SQL EN LA BASE DE DATOS ESTABLECIDA EN LA CONEXIÓN
+$id_vuelo = $_POST['id_update'];
+$numero_vuelo = $_POST['numero_vuelo'];
+$aerolinea = $_POST['aerolinea'];
+$origen = $_POST['origen'];
+$destino = $_POST['destino'];
+$fecha_salida = $_POST['fecha_salida'];
+$hora_salida = $_POST['hora_salida'];
+$estado = $_POST['estado'];
+$puerta_embarque = $_POST['puerta_embarque'];
+
+$sql = "UPDATE vuelos
+SET  numero_vuelo = '$numero_vuelo',  aerolinea = '$aerolinea',  origen = '$origen', destino = '$destino', fecha_salida = '$fecha_salida', hora_salida = '$hora_salida' estado = '$estado', puerta_embarque = '$puerta_embarque' 
+WHERE id_vuelo = '$id_vuelo'";
+
 $consulta = mysqli_query($conexion, $sql);
 
 if ($conexion) {
