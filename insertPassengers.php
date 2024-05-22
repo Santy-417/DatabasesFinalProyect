@@ -2,18 +2,15 @@
 include('conexion_bd.php');
 $conexion = conexion_bd();
 
-$numero_vuelo = $_POST['numero_vuelo'];
-$aerolinea = $_POST['aerolinea'];
-$origen = $_POST['origen'];
-$destino = $_POST['destino'];
-$fecha_salida = $_POST['fecha_salida'];
-$hora_salida = $_POST['hora_salida'];
-$estado = $_POST['estado'];
-$puerta_embarque = $_POST['puerta_embarque'];
+$nombre = $_POST['nombre'];
+$apellido = $_POST['apellido'];
+$fecha_nacimiento = $_POST['fecha_nacimiento'];
+$documento_identidad = $_POST['documento_identidad'];
 
-$sql = "INSERT INTO vuelos (numero_vuelo, aerolinea, origen, destino, fecha_salida, hora_salida, estado, puerta_embarque) VALUES ('$numero_vuelo', '$aerolinea', '$origen', '$destino', '$fecha_salida', '$fecha_salida', '$estado', '$puerta_embarque')";
+$sql = "INSERT INTO passengers (nombre, apellido, fecha_nacimiento, documento_identidad) VALUES ('$nombre', '$apellido', '$fecha_nacimiento', '$documento_identidad')";
+
 $consulta = mysqli_query($conexion, $sql);
 
 if ($conexion) {
-    header("Location: flights.php");
+    header("Location: passengers.php");
 }

@@ -2,22 +2,18 @@
 include('conexion_bd.php');
 $conexion = conexion_bd();
 
-$id_vuelo = $_POST['id_update'];
-$numero_vuelo = $_POST['numero_vuelo'];
-$aerolinea = $_POST['aerolinea'];
-$origen = $_POST['origen'];
-$destino = $_POST['destino'];
-$fecha_salida = $_POST['fecha_salida'];
-$hora_salida = $_POST['hora_salida'];
-$estado = $_POST['estado'];
-$puerta_embarque = $_POST['puerta_embarque'];
+$id_pasajero = $_POST['id_update'];
+$nombre = $_POST['nombre'];
+$apellido = $_POST['apellido'];
+$fecha_nacimiento = $_POST['fecha_nacimiento'];
+$documento_identidad = $_POST['documento_identidad'];
+$sql = "UPDATE Passengers
+SET  nombre = '$nombre',  apellido = '$apellido',  fecha_nacimiento = '$fecha_nacimiento', documento_identidad = '$documento_identidad' 
+WHERE id_pasajero = '$id_pasajero'";
 
-$sql = "UPDATE vuelos
-SET  numero_vuelo = '$numero_vuelo',  aerolinea = '$aerolinea',  origen = '$origen', destino = '$destino', fecha_salida = '$fecha_salida', hora_salida = '$hora_salida' estado = '$estado', puerta_embarque = '$puerta_embarque' 
-WHERE id_vuelo = '$id_vuelo'";
 
 $consulta = mysqli_query($conexion, $sql);
 
 if ($conexion) {
-    header("Location: flights.php");
+    header("Location: passengers.php");
 }

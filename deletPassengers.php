@@ -2,12 +2,12 @@
 include('conexion_bd.php');
 $conexion = conexion_bd();
 
-$id_personal = $_POST['id_delete'];
+$id_pasajero = $_POST['id_delete'];
 
-$sql = "DELETE FROM vuelos WHERE id_vuelo='$id_vuelo'";
+$sql = "DELETE FROM Passengers WHERE id_pasajero='$id_pasajero'";
 
 $consulta = mysqli_query($conexion, $sql);
 
 if ($conexion) {
-    header("Location: flights.php");
+    header("Location: passengers.php");
 }

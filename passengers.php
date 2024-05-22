@@ -3,7 +3,7 @@ include 'conexion_bd.php';
 $conexion = conexion_bd();
 
 
-$sql = "SELECT * FROM vuelos";
+$sql = "SELECT * FROM passengers";
 $consulta = mysqli_query($conexion, $sql);
 
 ?>
@@ -12,75 +12,60 @@ $consulta = mysqli_query($conexion, $sql);
 <html>
 
 <head>
-    <title>CRUD de Vuelos</title>
+    <title>CRUD de Pasajeros</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 
-    <h2>Crear Vuelos</h2>
-    <form action="insertFlights.php" method="post">
-        Numero de vuelo: <input type="text" name="numero_vuelo" required><br>
-        Aerolinea: <input type="text" name="aerolinea" required><br>
-        Origen: <input type="text" name="origen" required><br>
-        Destino: <input type="text" name="destino" required><br>
-        Fecha de salida: <input type="date" name="fecha_salida" required><br>
-        Hora de salida: <input type="time" name="hora_salida" required><br>
-        Estado: <input type="text" name="estado" required><br>
-        Puerta de embarque: <input type="text" name="puerta_embarque" required><br>
-        <input type="submit" name="create" value="Crear Vuelo">
+    <h2>Crear Pasajeros</h2>
+    <form action="insertPassengers.php" method="post">
+        Nombre: <input type="text" name="nombre" required><br>
+        Apellido: <input type="text" name="apellido" required><br>
+        Fecha de nacimiento: <input type="date" name="fecha_nacimiento" required><br>
+        Documento de identidad: <input type="text" name="documento_identidad" required><br>
+        <input type="submit" name="create" value="Crear Pasajero">
+
     </form>
 
 
-    <h2>Lista de Vuelos</h2>
+    <h2>Lista de Pasajeros</h2>
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Numero de Vuelo</th>
-            <th>Aerolinea</th>
-            <th>Origen</th>
-            <th>Destino</th>
-            <th>Fecha de Salida</th>
-            <th>Hora de Salida</th>
-            <th>Estado</th>
-            <th>Puerta de Embarque</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de nacimiento</th>
+            <th>Documento de identidad</th>
         </tr>
 
         <?php
         if ($consulta->num_rows > 0) {
             while ($row = $consulta->fetch_assoc()) {
                 echo "<tr>
-                <td>" . $row["id_vuelo"] . "</td>
-                <td>" . $row["numero_vuelo"] . "</td>
-                <td>" . $row["aerolinea"] . "</td>
-                <td>" . $row["origen"] . "</td>
-                <td>" . $row["destino"] . "</td>
-                <td>" . $row["fecha_salida"] . "</td>
-                <td>" . $row["hora_salida"] . "</td>
-                <td>" . $row["estado"] . "</td>
-                <td>" . $row["puerta_embarque"] . "</td>
+            <td>" . $row["id_pasajero"] . "</td>
+            <td>" . $row["nombre"] . "</td>
+            <td>" . $row["apellido"] . "</td>
+            <td>" . $row["fecha_nacimiento"] . "</td>
+            <td>" . $row["documento_identidad"] . "</td>
             <td class='actions'>
-                <form action='updateFlights.php' method='post'>
-                    <input type='hidden' name='id_update' value='" . $row["id_vuelo"] . "'>
-                    <input type='text' name='numero_vuelo' value='" . htmlspecialchars($row["numero_vuelo"]) . "' placeholder=Numero de Vuelo' required>
-                    <input type='text' name='aerolinea' value='" . htmlspecialchars($row["aerolinea"]) . "' placeholder='Aerolinea' required>
-                    <input type='text' name='origen' value='" . htmlspecialchars($row["origen"]) . "' placeholder='Origen'>
-                    <input type='text' name='destino' value='" . htmlspecialchars($row["destino"]) . "' placeholder='Destino'>
-                    <input type='text' name='fecha_salida' value='" . htmlspecialchars($row["fecha_salida"]) . "' placeholder='Fecha de Salida'>
-                    <input type='text' name='hora_salida' value='" . htmlspecialchars($row["hora_salida"]) . "' placeholder='Hora de Salida'>
-                    <input type='text' name='estado' value='" . htmlspecialchars($row["estado"]) . "' placeholder='Estado'>
-                    <input type='text' name='puerta_embarque' value='" . htmlspecialchars($row["puerta_embarque"]) . "' placeholder='Puerta de Embarque'>
+                <form action='updatePassengers.php' method='post'>
+                    <input type='hidden' name='id_update' value='" . $row["id_pasajero"] . "'>
+                    <input type='text' name='nombre' value='" . htmlspecialchars($row["nombre"]) . "' placeholder='Nombre' required>
+                    <input type='text' name='apellido' value='" . htmlspecialchars($row["apellido"]) . "' placeholder='Apellido' required>
+                    <input type='text' name='fecha_nacimiento' value='" . htmlspecialchars($row["fecha_nacimiento"]) . "' placeholder='Fecha de nacimiento'>
+                    <input type='text' name='documento_identidad' value='" . htmlspecialchars($row["documento_identidad"]) . "' placeholder='Documento de identidad'>
                     <button type='submit' name='update' value='Actualizar'>Actualizar</button>
                 </form>
-                <form action='deletFlights.php' method='post'>
-                    <input type='hidden' name='id_delete' value='" . $row["id_vuelo"] . "'>
+                <form action='deletPassengers.php' method='post'>
+                    <input type='hidden' name='id_delete' value='" . $row["id_pasajero"] . "'>
                     <button type='submit' name='delete' value='Eliminar'>Eliminar</button>
                 </form>
             </td>
         </tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>No hay Vuelos</td></tr>";
+            echo "<tr><td colspan='5'>No hay Pasajeros</td></tr>";
         }
         ?>
     </table>
