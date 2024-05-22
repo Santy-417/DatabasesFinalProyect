@@ -11,7 +11,7 @@ $hora_salida = $_POST['hora_salida'];
 $estado = $_POST['estado'];
 $puerta_embarque = $_POST['puerta_embarque'];
 
-$sql = "INSERT INTO vuelos (numero_vuelo, aerolinea, origen, destino, fecha_salida, hora_salida, estado, puerta_embarque) VALUES ('$numero_vuelo', '$aerolinea', '$origen', '$destino', '$fecha_salida', '$fecha_salida', '$estado', '$puerta_embarque')";
+$sql = "INSERT INTO flights (numero_vuelo, aerolinea, origen, destino, fecha_salida, hora_salida, estado, puerta_embarque) VALUES ('$numero_vuelo', '$aerolinea', '$origen', '$destino', '$fecha_salida', '$fecha_salida', '$estado', '$puerta_embarque')";
 $consulta = mysqli_query($conexion, $sql);
 
 if ($conexion) {

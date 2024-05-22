@@ -12,8 +12,8 @@ $hora_salida = $_POST['hora_salida'];
 $estado = $_POST['estado'];
 $puerta_embarque = $_POST['puerta_embarque'];
 
-$sql = "UPDATE vuelos
-SET  numero_vuelo = '$numero_vuelo',  aerolinea = '$aerolinea',  origen = '$origen', destino = '$destino', fecha_salida = '$fecha_salida', hora_salida = '$hora_salida' estado = '$estado', puerta_embarque = '$puerta_embarque' 
+$sql = "UPDATE flights
+SET  numero_vuelo = '$numero_vuelo',  aerolinea = '$aerolinea',  origen = '$origen', destino = '$destino', fecha_salida = '$fecha_salida', hora_salida = '$hora_salida', estado = '$estado', puerta_embarque = '$puerta_embarque' 
 WHERE id_vuelo = '$id_vuelo'";
 
 $consulta = mysqli_query($conexion, $sql);

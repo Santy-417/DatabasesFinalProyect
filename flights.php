@@ -3,7 +3,7 @@ include 'conexion_bd.php';
 $conexion = conexion_bd();
 
 
-$sql = "SELECT * FROM vuelos";
+$sql = "SELECT * FROM flights";
 $consulta = mysqli_query($conexion, $sql);
 
 ?>
