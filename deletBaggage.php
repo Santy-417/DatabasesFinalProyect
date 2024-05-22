@@ -2,9 +2,9 @@
 include('conexion_bd.php');
 $conexion = conexion_bd();
 
-$id_pasajero = $_POST['id_delete'];
+$id_equipaje = $_POST['id_delete'];
 
-$sql = "DELETE FROM Passengers WHERE id_pasajero='$id_pasajero'";
+$sql = "DELETE FROM baggage WHERE id_equipaje='$id_equipaje'";
 
 $consulta = mysqli_query($conexion, $sql);
 
