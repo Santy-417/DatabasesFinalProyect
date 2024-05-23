@@ -4,7 +4,7 @@ function conexion_bd()
    $servidor = "localhost";
    $usuario = "root";
    $password = "";
-   $bd = "aeropuerto";
+   $bd = "bd6316";
 
    $conn = mysqli_connect($servidor, $usuario, $password);
    mysqli_select_db($conn, $bd);

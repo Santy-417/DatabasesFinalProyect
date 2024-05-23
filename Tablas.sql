@@ -42,6 +42,13 @@ CREATE TABLE airportServices (
     ubicacion VARCHAR(100)
 );
 
+CREATE TABLE logins (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL
+);
+
+
 INSERT INTO flights (id_vuelo, numero_vuelo, aerolinea, origen, destino, fecha_salida, hora_salida, estado, puerta_embarque) VALUES
 (1, 'CA123', 'Cielos Airlines', 'Nueva York', 'Los Ángeles', '2024-03-18', '08:00:00', 'Programado', 'A1'),
 (2, 'AB456', 'Aerobrasil', 'Los Ángeles', 'Miami', '2024-03-18', '10:30:00', 'Retrasado', 'B3'),
@@ -351,3 +358,6 @@ INSERT INTO airportServices (id_servicio, nombre, tipo, ubicacion) VALUES
 (58, 'Puesto de Control de Pasaportes', 'Control de Pasaportes', 'Terminal A'),
 (59, 'Área de Experiencias Gastronómicas', 'Experiencias Gastronómicas', 'Terminal B'),
 (60, 'Punto de Recogida de Taxis y Transporte Privado', 'Recogida de Taxis', 'Terminal C');
+
+INSERT INTO logins (usuario, contraseña) VALUES ('PROFESOR', 'PROFESOR');
+INSERT INTO logins (usuario, contraseña) VALUES ('82202216316', '1055750788@Bd1');
