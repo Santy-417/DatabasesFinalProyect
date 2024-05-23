@@ -1,134 +1,99 @@
-Reporte de Reservas Actuales: Generar un informe que liste todas las reservas activas con los siguientes campos: ReservaID, ClienteID, VueloID, FechaReserva, Estado, Clase, Precio y Asiento.
+Consulta 1:
+SELECT * FROM flights WHERE estado = 'Programado';
 
-SELECT 
-    r.ReservaID, r.ClienteID, r.VueloID, r.FechaReserva, r.Estado, b.Clase, b.Precio, b.Asiento
-FROM 
-    Reservas r
-JOIN 
-    Boletos b ON r.ReservaID = b.ReservaID
-WHERE 
-    r.Estado = 'confirmada';
+Esta consulta selecciona todas las columnas de la tabla "flights" donde el estado del vuelo es "Programado". Devuelve información sobre vuelos que están programados para salir en el futuro.
 
+Consulta 2:
+SELECT * FROM flights WHERE estado = 'Cancelado';
 
-Reporte de Clientes Frecuentes: Generar un reporte que identifique a los clientes que han realizado más de cinco reservas en los últimos doce meses, incluyendo ClienteID, Nombre, Apellido, Email y el Número de Reservas."
+Similar a la consulta 1, pero esta vez selecciona vuelos que están cancelados.
 
-SELECT 
-    c.ClienteID, c.Nombre, c.Apellido, c.Email, COUNT(r.ReservaID) AS NumeroReservas
-FROM 
-    Clientes c
-JOIN 
-    Reservas r ON c.ClienteID = r.ClienteID
-WHERE 
-    r.Creado_en >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-GROUP BY 
-    c.ClienteID, c.Nombre, c.Apellido, c.Email
-HAVING 
-    COUNT(r.ReservaID) > 5;
+Consulta 3:
+SELECT DISTINCT aerolinea FROM flights WHERE estado = 'Programado';
 
+Selecciona las aerolíneas distintas de los vuelos que están programados. Devuelve una lista de aerolíneas que tienen vuelos programados.
 
-Reporte de Vuelos por Aeronave: Generar un informe que detalle los vuelos asociados a una aeronave específica, con AeronaveID, VueloID, NúmeroVuelo, Aerolínea, FechaHoraSalida, FechaHoraLlegada, Origen y Destino
+Consulta 4:
+SELECT aerolinea, COUNT(*) AS total_vuelos_por_aerolinea FROM flights WHERE estado = 'Programado' GROUP BY aerolinea;
 
-SELECT 
-    a.AeronaveID, v.VueloID, v.NumeroVuelo, v.Aerolinea, v.FechaHoraSalida, v.FechaHoraLlegada, v.Origen, v.Destino
-FROM 
-    Vuelos v
-JOIN 
-    Aeronaves a ON v.AeronaveID = a.AeronaveID;
+Cuenta el número de vuelos por aerolínea que están programados y los agrupa por aerolínea. Es útil para saber cuántos vuelos tiene cada aerolínea.
 
+Consulta 5:
+SELECT origen, COUNT(*) AS total_salidas FROM flights WHERE estado = 'Programado' GROUP BY origen;
 
-Reporte de Boletos Vendidos: Generar un resumen de la cantidad de boletos vendidos por vuelo, aeronave y destino, con los campos VueloID, AeronaveID, Clase, Cantidad Vendida y Ingreso Total.
+Cuenta el número de salidas desde cada origen para vuelos programados. Ayuda a entender cuántos vuelos salen de cada ubicación.
 
-SELECT 
-    v.VueloID, v.AeronaveID, b.Clase, COUNT(b.BoletoID) AS CantidadVendida, SUM(b.Precio) AS IngresoTotal
-FROM 
-    Boletos b
-JOIN 
-    Reservas r ON b.ReservaID = r.ReservaID
-JOIN 
-    Vuelos v ON r.VueloID = v.VueloID
-GROUP BY 
-    v.VueloID, v.AeronaveID, b.Clase;
+Consulta 6:
+SELECT destino, COUNT(*) AS total_llegadas FROM flights WHERE estado = 'Programado' GROUP BY destino;
 
+Similar a la consulta 5, pero cuenta el número de llegadas a cada destino para vuelos programados. Proporciona información sobre cuántos vuelos llegan a cada destino.
 
-Reporte de Reservas por Estado: Preparar un informe que agrupe las reservas por su estado (confirmada, cancelada, etc.) mostrando Estado, Cantidad de Reservas y Ingreso Total.
+Consulta 7:
+SELECT * FROM flights WHERE origen = 'Nueva York' AND destino = 'Los Ángeles';
 
-SELECT 
-    r.Estado, COUNT(r.ReservaID) AS CantidadReservas, SUM(b.Precio) AS IngresoTotal
-FROM 
-    Reservas r
-JOIN 
-    Boletos b ON r.ReservaID = b.ReservaID
-GROUP BY 
-    r.Estado;
+Selecciona todos los vuelos que van desde Nueva York a Los Ángeles. Devuelve información sobre vuelos específicos entre esas dos ciudades.
 
+Consulta 8:
+SELECT * FROM personal WHERE puesto = 'Piloto';
 
-Reporte de Ingresos por Clase de Boleto: Generar un reporte que clasifique los boletos vendidos por clase (económica, ejecutiva, etc.) y calcule el Ingreso Total por clase.
+Selecciona todo el personal que tiene el puesto de "Piloto". Devuelve información sobre todos los pilotos en la base de datos.
 
-SELECT 
-    b.Clase, SUM(b.Precio) AS IngresoTotal
-FROM 
-    Boletos b
-GROUP BY 
-    b.Clase;
+Consulta 9:
+SELECT * FROM flights WHERE estado = 'Cancelado';
 
+Igual que la consulta 2, selecciona vuelos que están cancelados. Esta consulta parece ser duplicada.
 
-Reporte de Vuelos más Demandados: Generar un informe que muestre los vuelos más demandados en función del Número de Reservas realizadas, incluyendo VueloID, NúmeroVuelo, Aerolínea, Origen, Destino y Número de Reservas.
+Consulta 10:
+SELECT * FROM baggage WHERE estado = 'Perdido';
 
-SELECT 
-    v.VueloID, v.NumeroVuelo, v.Aerolinea, v.Origen, v.Destino, COUNT(r.ReservaID) AS NumeroReservas
-FROM 
-    Vuelos v
-JOIN 
-    Reservas r ON v.VueloID = r.VueloID
-GROUP BY 
-    v.VueloID, v.NumeroVuelo, v.Aerolinea, v.Origen, v.Destino
-ORDER BY 
-    NumeroReservas DESC
-LIMIT 10;
+Selecciona el equipaje que está perdido. Devuelve información sobre el equipaje perdido.
 
+Consulta 11:
+SELECT * FROM flights WHERE fecha_salida = '2024-03-18';
 
+Selecciona vuelos que ocurrieron en una fecha específica (en este caso, el 18 de marzo de 2024).
 
-Reporte de Clientes sin Reservas Recientes: Identificar a los clientes que no han realizado ninguna reserva en los últimos seis meses, con los campos ClienteID, Nombre, Apellido y Última Reserva.
+Consulta 12:
+SELECT * FROM flights WHERE hora_salida BETWEEN '10:00:00' AND '18:00:00';
 
-SELECT 
-    c.ClienteID, c.Nombre, c.Apellido, MAX(r.Creado_en) AS UltimaReserva
-FROM 
-    Clientes c
-LEFT JOIN 
-    Reservas r ON c.ClienteID = r.ClienteID
-GROUP BY 
-    c.ClienteID, c.Nombre, c.Apellido
-HAVING 
-    MAX(r.Creado_en) IS NULL OR MAX(r.Creado_en) < DATE_SUB(CURDATE(), INTERVAL 6 MONTH);
+Selecciona vuelos que tienen una hora de salida entre las 10:00:00 y las 18:00:00. Devuelve información sobre vuelos que salen durante cierto rango horario.
 
+Consulta 13:
+SELECT * FROM flights WHERE aerolinea = 'Aerobrasil';
 
+Selecciona todos los vuelos de la aerolínea "Aerobrasil". Devuelve información sobre los vuelos operados por esta aerolínea.
 
-Reporte de Boletos No Asignados: Generar un informe que muestre boletos que no han sido asignados a un asiento específico.
+Consulta 14:
+SELECT * FROM passengers WHERE fecha_nacimiento < '1990-01-01';
 
-SELECT 
-    b.BoletoID, b.ReservaID, b.Clase, b.Precio, b.Asiento
-FROM 
-    Boletos b
-WHERE 
-    b.Asiento IS NULL OR b.Asiento = '';
+Selecciona pasajeros cuya fecha de nacimiento sea anterior al 1 de enero de 1990. Devuelve información sobre pasajeros que nacieron antes de esa fecha.
 
+Consulta 15:
+SELECT * FROM flights WHERE destino = 'París';
 
-Reporte de Capacidad de Aeronaves: Generar un informe que muestre la capacidad de las aeronaves y cuántos vuelos han realizado en los últimos doce meses, con AeronaveID, Modelo, Capacidad, Número de Vuelos y Número de Pasajeros Transportados.
+Selecciona vuelos que tengan como destino la ciudad de París. Devuelve información sobre vuelos que van a París.
 
-SELECT 
-    a.AeronaveID, a.Modelo, a.Capacidad, COUNT(v.VueloID) AS NumeroVuelos, SUM(b.CantidadPasajeros) AS NumeroPasajerosTransportados
-FROM 
-    Aeronaves a
-JOIN 
-    Vuelos v ON a.AeronaveID = v.AeronaveID
-LEFT JOIN 
-    (SELECT 
-        r.VueloID, COUNT(b.BoletoID) AS CantidadPasajeros
-    FROM 
-        Reservas r
-    JOIN 
-        Boletos b ON r.ReservaID = b.ReservaID
-    GROUP BY 
-        r.VueloID) b ON v.VueloID = b.VueloID
-GROUP BY 
-    a.AeronaveID, a.Modelo, a.Capacidad;
+Consulta 16:
+SELECT * FROM baggage WHERE estado = 'Entregado';
+
+Selecciona el equipaje que ha sido entregado. Devuelve información sobre el equipaje que ya ha sido entregado a los pasajeros.
+
+Consulta 17:
+SELECT * FROM flights WHERE aerolinea LIKE 'Cielos%';
+
+Selecciona vuelos de aerolíneas que comienzan con "Cielos". Devuelve información sobre vuelos operados por aerolíneas con ese nombre.
+
+Consulta 18:
+SELECT * FROM personal WHERE departamento = 'Tripulación de Cabina';
+
+Selecciona todo el personal que trabaja en el departamento de "Tripulación de Cabina". Devuelve información sobre el personal que trabaja en esa área.
+
+Consulta 19:
+SELECT * FROM passengers WHERE documento_identidad LIKE '%A%';
+
+Selecciona pasajeros cuyo documento de identidad contenga la letra 'A'. Devuelve información sobre los pasajeros cuyos documentos contienen esa letra.
+
+Consulta 20:
+SELECT * FROM flights WHERE estado = 'Retrasado';
+
+Selecciona vuelos que están retrasados. Devuelve información sobre vuelos que no salieron a tiempo según lo programado.
