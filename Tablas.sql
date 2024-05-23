@@ -48,6 +48,9 @@ CREATE TABLE logins (
     contraseña VARCHAR(255) NOT NULL
 );
 
+INSERT INTO logins (usuario, contraseña) VALUES ('PROFESOR', 'PROFESOR');
+INSERT INTO logins (usuario, contraseña) VALUES ('82202216316', '1055750788@Bd1');
+
 
 INSERT INTO flights (id_vuelo, numero_vuelo, aerolinea, origen, destino, fecha_salida, hora_salida, estado, puerta_embarque) VALUES
 (1, 'CA123', 'Cielos Airlines', 'Nueva York', 'Los Ángeles', '2024-03-18', '08:00:00', 'Programado', 'A1'),
@@ -359,5 +362,3 @@ INSERT INTO airportServices (id_servicio, nombre, tipo, ubicacion) VALUES
 (59, 'Área de Experiencias Gastronómicas', 'Experiencias Gastronómicas', 'Terminal B'),
 (60, 'Punto de Recogida de Taxis y Transporte Privado', 'Recogida de Taxis', 'Terminal C');
 
-INSERT INTO logins (usuario, contraseña) VALUES ('PROFESOR', 'PROFESOR');
-INSERT INTO logins (usuario, contraseña) VALUES ('82202216316', '1055750788@Bd1');
